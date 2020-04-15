@@ -1,0 +1,13 @@
+#!/bin/bash
+BROKER_IP=`grep broker_ip config.ini|awk '{print $3}'`
+BROKER_PORT=`grep broker_port config.ini|awk '{print $3}'`
+
+while true;
+	do
+	let "level = $RANDOM%127+128"
+	mosquitto_pub -h $BROKER_IP -p $BROKER_PORT -t automadom/et312/channel_b -m "$level"
+	sleep 1
+	let "level = $RANDOM%127+128"
+	mosquitto_pub -h $BROKER_IP -p $BROKER_PORT -t automadom/et312/channel_a -m "$level"
+	sleep 3
+done
